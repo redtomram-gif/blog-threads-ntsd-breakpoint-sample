@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>blog-threads-ntsd-breakpoint-sample</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="post">
+<header class="site">
+  <a class="brand" href="https://redtomram-gif.github.io/thottams-blog-archive/">Thottam R. Sriram</a>
+  <span class="tag">Code sample &middot; MSDN blog archive</span>
+</header>
+<main>
+<article>
+<h1>NTSD and SOS: breakpoint on a specific thread</h1>
+<p class="meta">
+  <code>blog-threads-ntsd-breakpoint-sample</code>
+  <a class="repo" href="https://redtomram-gif.github.io/thottams-blog-archive/posts/2007-03-02-ntsd-and-sos-adding-a-break-point-on-a-method-with-reference-to-a-specific-thread.html">read the blog post &rarr;</a>
+</p>
+<p>Two named threads run the same method in a loop. Used as the target process for setting a breakpoint on a method scoped to one specific thread under NTSD/SOS.</p>
+
+<h2>Source</h2>
+<figure class="code">
+<figcaption>sample.cs <span class="lang">C#</span></figcaption>
+<pre><code class="hljs"><span class="hljs-keyword">using</span> System;
+
+<span class="hljs-keyword">using</span> System.Threading;
+
+ 
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">sample</span>
+
+{
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ThreadMethod</span>()</span>
+
+    {
+
+        <span class="hljs-keyword">while</span>(<span class="hljs-literal">true</span>)
+
+        {
+
+            Console.WriteLine(<span class="hljs-string">&quot;{0}&quot;</span>, Thread.CurrentThread.Name);
+
+            Thread.Sleep(<span class="hljs-number">600</span>);
+
+        }
+
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Main</span>()</span>
+
+    {
+
+        sample s = <span class="hljs-keyword">new</span> sample();
+
+        Thread t1 = <span class="hljs-keyword">new</span> Thread(s.ThreadMethod);
+
+        Thread t2 = <span class="hljs-keyword">new</span> Thread(s.ThreadMethod);
+
+        t1.Name = <span class="hljs-string">&quot;First Thread&quot;</span>;
+
+        t2.Name = <span class="hljs-string">&quot;Second Thread&quot;</span>;
+
+        t1.Start();
+
+        t2.Start();
+
+        Console.WriteLine(<span class="hljs-string">&quot;Enter any string to stop execution:&quot;</span>);
+
+        String line = Console.ReadLine();
+
+        t1.Abort();
+
+        t2.Abort();
+
+    }
+
+}</code></pre>
+</figure>
+</article>
+<p class="back"><a href="https://redtomram-gif.github.io/thottams-blog-archive/">&larr; All posts</a></p>
+</main>
+<footer class="site">
+  Part of the <a href="https://redtomram-gif.github.io/thottams-blog-archive/">MSDN blog archive</a>.
+  Source on <a href="https://github.com/redtomram-gif/blog-threads-ntsd-breakpoint-sample">GitHub</a>.
+</footer>
+</body>
+</html>
