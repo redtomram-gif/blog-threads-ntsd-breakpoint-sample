@@ -6,10 +6,10 @@ Originally published at [NTSD and SOS: breakpoint on a specific thread](https://
 
 ## Building
 
-```text
-csc sample.cs
-sample.exe
-```
+<!-- Console -->
+
+    csc sample.cs
+    sample.exe
 
 ## Note
 
